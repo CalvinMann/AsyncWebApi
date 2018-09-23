@@ -10,7 +10,7 @@ namespace Books.Api.Mappings
 {
     public class ArrayModelBinder : IModelBinder
     {
-        Task BindModelAsync(ModelBindingContext bindingContext)
+        Task IModelBinder.BindModelAsync(ModelBindingContext bindingContext)
         {
             if (! bindingContext.ModelMetadata.IsEnumerableType)
             {

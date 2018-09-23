@@ -32,7 +32,7 @@ namespace Books.Api.Controllers
 
         [HttpGet("({bookIds})", Name = "GetBookCollection")]
         public async Task<IActionResult> GetBookCollection(
-            [ModelBinder(BinderType = typeof(ArrayModelBinder)]IEnumerable<Guid> bookIds)
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> bookIds)
         {
             var bookEntities = await _booksRepository.GetBooksAsync();
 
