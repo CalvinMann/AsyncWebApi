@@ -17,13 +17,11 @@ namespace Books.Api.Entities
         [MaxLength(150)]
         public string Title { get; set; }
 
-        [Required]
         [MaxLength(2500)]
         public string Description { get; set; }
 
-
         public Guid AuthorId { get; set; }
-
         public Author Author { get; set; }
     }
+
 }

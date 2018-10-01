@@ -18,12 +18,12 @@ namespace Books.Api
     {
         public static void Main(string[] args)
         {
-
-            //Throttle the thread pool
+            // throttle the thread pool (set available threads to amount of processors)
             ThreadPool.SetMaxThreads(Environment.ProcessorCount, Environment.ProcessorCount);
 
             var host = CreateWebHostBuilder(args).Build();
 
+            // migrate the database.  Best practice = in Main, using service scope
             using (var scope = host.Services.CreateScope())
             {
                 try
@@ -31,12 +31,14 @@ namespace Books.Api
                     var context = scope.ServiceProvider.GetService<BooksContext>();
                     context.Database.Migrate();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                   //log
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating the database.");
                 }
             }
 
+            // run the web app
             host.Run();
         }
 
